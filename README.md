@@ -3,14 +3,10 @@
 A documentation hub for my major learnings from the **ProDev Frontend Engineering Program**.  
 This repository highlights my understanding of frontend engineering concepts, tools, challenges, and best practices gained during the program.
 
----
-
 ## Program Overview
 
 The **ProDev Frontend Engineering Program** provided a comprehensive foundation in modern frontend development.  
 It emphasized building scalable, performant, and user-friendly applications while applying industry best practices and collaboration workflows.
-
----
 
 ## Major Learnings
 
@@ -23,8 +19,6 @@ It emphasized building scalable, performant, and user-friendly applications whil
 - **System Design & Analysis**: Understanding how to structure large-scale frontend systems
 - **Version Control & Collaboration**: Git, GitHub, GitHub Actions
 
----
-
 ### Important Concepts
 - **Component-driven development** using React & Next.js
 - **State management**: Context API, Zustand, Redux
@@ -34,8 +28,6 @@ It emphasized building scalable, performant, and user-friendly applications whil
 - **Type safety with TypeScript** for robust code
 - **Performance optimization**: lazy loading, code splitting, memoization
 - **System design** for scalable frontend applications
-
----
 
 ### Challenges & Solutions
 - **Challenge**: Integrating complex APIs with multiple states (loading, error, success).  
@@ -49,8 +41,6 @@ It emphasized building scalable, performant, and user-friendly applications whil
 
 - **Challenge**: Deployment and CI/CD.  
   **Solution**: Automated builds using GitHub Actions and deployed apps with platforms like Vercel.
-
----
 
 ### Best Practices & Personal Takeaways
 - Write **clean, reusable, and maintainable** code.
