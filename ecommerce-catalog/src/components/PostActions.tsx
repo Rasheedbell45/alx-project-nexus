@@ -39,7 +39,7 @@ const PostActions: React.FC<Props> = ({ postId }) => {
           className="border px-2 py-1 rounded w-full mb-2"
         />
         <button onClick={handleComment} className="px-3 py-1 bg-purple-500 text-white rounded">
-          💬 Comment
+           Comment
         </button>
       </div>
       <ul className="mt-2 text-sm text-gray-700">
