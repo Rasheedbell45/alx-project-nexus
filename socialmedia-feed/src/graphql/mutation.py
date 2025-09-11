@@ -2,7 +2,6 @@ mutation {
   tokenAuth(username: "alice", password: "secret") {
     token
   }
-}
 createPost(content: "Hello GraphQL world", mediaUrl: "https://...") {
     post {
       id
