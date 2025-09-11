@@ -20,3 +20,27 @@ git clone <repo>
 cd social-feed
 npm install
 npm start
+
+# Social Backend (GraphQL)
+
+## GraphQL Playground
+Visit: /graphql/ (GraphiQL)
+
+## Authentication
+Obtain JWT:
+mutation {
+  tokenAuth(username: "user", password: "pass") { token }
+}
+
+Include token in Authorization header for protected mutations:
+Authorization: Bearer <token>
+
+## Queries
+- posts(first: 10)
+- post(id: ID)
+
+## Mutations
+- createPost(content, mediaUrl)
+- addComment(postId, content)
+- toggleLike(postId)
+- sharePost(postId)
