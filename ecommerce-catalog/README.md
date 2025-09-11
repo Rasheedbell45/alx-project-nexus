@@ -44,3 +44,23 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# Ecommerce API
+
+## Auth
+- POST /api/auth/token/ -> obtain access & refresh tokens
+- POST /api/auth/token/refresh/ -> refresh access token
+
+## Products
+- GET /api/products/?page=1&page_size=12
+- Filtering: ?category=electronics&min_price=10&max_price=100&in_stock=true
+- Search: ?search=phone
+- Ordering: ?ordering=price or ?ordering=-created_at
+
+## Categories
+- GET /api/categories/
+- GET /api/categories/<slug>/
+
+## API Docs
+- Swagger UI: /swagger/
+- ReDoc: /redoc/
