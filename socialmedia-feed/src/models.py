@@ -1,6 +1,16 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Count, Q
+
+def resolve_posts(self, info, **kwargs):
+    qs = Post.objects.select_related('author')\
+        .annotate(
+            likes_count=Count('interactions', filter=Q(interactions__interaction_type=Interaction.LIKE)),
+            shares_count=Count('interactions', filter=Q(interactions__interaction_type=Interaction.SHARE)),
+            comments_count=Count('comments')
+        ).prefetch_related('comments__author')
+    return qs
 
 User = settings.AUTH_USER_MODEL  # uses default or custom user
 
