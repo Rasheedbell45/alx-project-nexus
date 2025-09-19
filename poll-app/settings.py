@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
+    "corsheaders"
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_yasg",
@@ -32,6 +32,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = "polling_app.urls"
@@ -76,3 +77,4 @@ SIMPLE_JWT = {
 }
 
 STATIC_URL = "/static/"
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
