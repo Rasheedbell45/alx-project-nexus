@@ -19,11 +19,6 @@ class PollSerializer(serializers.ModelSerializer):
         fields = ('id', 'question', 'created_by', 'created_at', 'expires_at', 'options')
         read_only_fields = ('id', 'created_by', 'created_at')
 
-class VoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Vote
-        fields = ['id', 'option', 'voter']
-
     def create(self, validated_data):
         options_data = validated_data.pop('options', [])
         user = self.context['request'].user
@@ -31,3 +26,8 @@ class VoteSerializer(serializers.ModelSerializer):
         opts = [Option(poll=poll, text=o['text']) for o in options_data]
         Option.objects.bulk_create(opts)
         return poll
+
+class VoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vote
+        fields = ['id', 'option', 'voter']
