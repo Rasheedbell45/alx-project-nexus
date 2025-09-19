@@ -1,4 +1,3 @@
-// src/pages/Results.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getResults } from "../api";
