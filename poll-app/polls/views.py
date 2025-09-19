@@ -1,13 +1,50 @@
-from rest_framework import viewsets, permissions, status
+from rest_framework import generics, viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.db.models import F
 from django.shortcuts import get_object_or_404
 from .models import Poll, Option, Vote
-from .serializers import PollSerializer, OptionSerializer
+from .serializers import PollSerializer, OptionSerializer, VoteSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django.utils import timezone
 from django.db import transaction, IntegrityError
+
+class PollListCreateView(generics.ListCreateAPIView):
+    queryset = Poll.objects.all()
+    serializer_class = PollSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+class PollDetailView(generics.RetrieveAPIView):
+    queryset = Poll.objects.all()
+    serializer_class = PollSerializer
+
+class OptionCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, poll_id):
+        poll = get_object_or_404(Poll, id=poll_id)
+        serializer = OptionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(poll=poll)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class VoteCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, option_id):
+        option = get_object_or_404(Option, id=option_id)
+        # prevent double voting
+        if Vote.objects.filter(option=option, voter=request.user).exists():
+            return Response({"error": "You already voted on this option."},
+                            status=status.HTTP_400_BAD_REQUEST)
+        vote = Vote.objects.create(option=option, voter=request.user)
+        serializer = VoteSerializer(vote)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """Allow write only to the poll creator; read to all (or staff)."""
