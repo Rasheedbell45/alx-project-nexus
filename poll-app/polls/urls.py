@@ -1,7 +1,6 @@
 from rest_framework.routers import DefaultRouter
-from .views import PollViewSet
 from django.urls import path
-from .views import PollListCreateView, PollDetailView, OptionCreateView, VoteCreateView
+from .views import PollListCreateView, PollDetailView, OptionCreateView, VoteCreateView, PollViewSet
 
 router = DefaultRouter()
 router.register(r'', PollViewSet, basename='poll')
