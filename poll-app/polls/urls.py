@@ -11,5 +11,11 @@ urlpatterns = [
     path('', PollListCreateView.as_view(), name='poll-list-create'),
     path('<int:pk>/', PollDetailView.as_view(), name='poll-detail'),
     path('<int:poll_id>/options/', OptionCreateView.as_view(), name='option-create'),
+
+    # Voting (supports both styles)
     path('options/<int:option_id>/vote/', VoteCreateView.as_view(), name='vote-create'),
+    path('<int:poll_id>/vote/', VoteCreateView.as_view(), name='poll-vote'),
+
+    # Results
+    path('<int:poll_id>/results/', PollResultsView.as_view(), name='poll-results'),
 ]
