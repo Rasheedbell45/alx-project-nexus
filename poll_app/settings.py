@@ -4,12 +4,10 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security
 SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-secret-key")
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 ALLOWED_HOSTS = ["*"]
 
-# Installed apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -19,6 +17,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "drf_yasg",
+    "corsheaders",
     "users",
     "polls",
 ]
@@ -26,6 +25,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -53,24 +53,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "poll_app.wsgi.application"
+ASGI_APPLICATION = "poll_app.asgi.application"
 
-# Database (Render provides DATABASE_URL env var)
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR}/db.sqlite3",
         conn_max_age=600,
+        ssl_require=False,  # Render Postgres sometimes requires this
     )
 }
 
-# Static files
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Django REST Framework settings
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
@@ -81,3 +79,10 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
+
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://vercel.com/rasheed-bellos-projects/alx-project-nexus-klhz"
+]
