@@ -117,3 +117,16 @@ class PollListCreateView(generics.ListCreateAPIView):
 class PollDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Poll.objects.all()
     serializer_class = PollSerializer
+
+class PollResultsView(generics.RetrieveAPIView):
+    queryset = Poll.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        poll = self.get_object()
+        options = poll.options.annotate(votes_count=Count('votes'))
+        serializer = OptionSerializer(options, many=True)
+        return Response({
+            "poll_id": poll.id,
+            "question": poll.question,
+            "options": serializer.data
+        })
