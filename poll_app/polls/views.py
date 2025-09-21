@@ -135,3 +135,7 @@ class VoteCreateView(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(vote)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+class PollListCreateView(generics.ListCreateAPIView):
+    queryset = Poll.objects.all()
+    serializer_class = PollSerializer
