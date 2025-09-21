@@ -92,6 +92,5 @@ CORS_ALLOWED_ORIGINS = [
     "https://vercel.com/rasheed-bellos-projects/alx-project-nexus-klhz",
 ]
 
-# Add Render app URL dynamically
 if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
     CORS_ALLOWED_ORIGINS.append(f"https://{os.environ['RENDER_EXTERNAL_HOSTNAME']}")
