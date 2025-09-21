@@ -113,3 +113,7 @@ class VoteCreateView(viewsets.ModelViewSet):
 class PollListCreateView(generics.ListCreateAPIView):
     queryset = Poll.objects.all()
     serializer_class = PollSerializer
+
+class PollDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Poll.objects.all()
+    serializer_class = PollSerializer
