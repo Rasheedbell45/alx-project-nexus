@@ -34,7 +34,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "poll_app.urls"
+ROOT_URLCONF = "poll-app.urls"
 
 TEMPLATES = [
     {
