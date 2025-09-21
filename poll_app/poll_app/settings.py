@@ -4,9 +4,14 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-secret-key")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    raise Exception("SECRET_KEY environment variable not set")
+
 DEBUG = os.environ.get("DEBUG", "0") == "1"
-ALLOWED_HOSTS = ["*"]
+
+# Replace with your actual Render app URL
+ALLOWED_HOSTS = [os.environ.get("RENDER_EXTERNAL_HOSTNAME", "localhost")]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -24,7 +29,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # For static files
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -59,7 +64,7 @@ DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR}/db.sqlite3",
         conn_max_age=600,
-        ssl_require=False,  # Render Postgres sometimes requires this
+        ssl_require=True,  # Enable SSL for Render Postgres
     )
 }
 
@@ -84,5 +89,9 @@ CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://vercel.com/rasheed-bellos-projects/alx-project-nexus-klhz"
+    "https://vercel.com/rasheed-bellos-projects/alx-project-nexus-klhz",
 ]
+
+# Add Render app URL dynamically
+if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
+    CORS_ALLOWED_ORIGINS.append(f"https://{os.environ['RENDER_EXTERNAL_HOSTNAME']}")
