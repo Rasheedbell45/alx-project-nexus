@@ -5,7 +5,7 @@ from .views import PollViewSet, OptionCreateView, VoteCreateView
 router = DefaultRouter()
 router.register(r'polls', PollViewSet, basename='poll')
 
-urlpatterns = router.urls  # includes list, create, retrieve, update, delete, vote, results
+urlpatterns = router.urls
 
 urlpatterns += [
     path('polls/<int:poll_id>/options/', OptionCreateView.as_view({'get': 'list', 'post': 'create'}), name='option-create'),
