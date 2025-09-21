@@ -3,7 +3,7 @@ from django.urls import path
 from .views import PollViewSet, OptionCreateView, VoteCreateView
 
 router = DefaultRouter()
-router.register(r'', PollViewSet, basename='poll')  # '' because included under api/polls/
+router.register(r'', PollViewSet, basename='poll')
 
 urlpatterns = router.urls + [
     # Options for a poll
