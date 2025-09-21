@@ -6,3 +6,4 @@ psycopg2-binary
 gunicorn
 dj-database-url
 django-cors-headers
+whitenoise>=6.5
