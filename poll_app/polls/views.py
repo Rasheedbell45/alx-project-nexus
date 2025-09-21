@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -22,20 +22,11 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
 
 class PollViewSet(viewsets.ModelViewSet):
-    """
-    Poll endpoints:
-      - list/create/retrieve/update/delete polls
-      - POST /polls/{id}/vote/   -> cast a vote
-      - GET  /polls/{id}/results/ -> poll results
-    """
     queryset = Poll.objects.prefetch_related("options").all().order_by("-created_at")
     serializer_class = PollSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
-        """
-        Create a poll with optional inline options.
-        """
         poll = serializer.save(created_by=self.request.user)
         options_data = self.request.data.get("options", [])
         for option in options_data:
@@ -44,13 +35,7 @@ class PollViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["post"], permission_classes=[permissions.IsAuthenticated])
     def vote(self, request, pk=None):
-        """
-        Cast a vote for an option in a poll.
-        JSON body: {"option_id": <int>}
-        """
         poll = self.get_object()
-
-        # check if expired
         if poll.expires_at and poll.expires_at < timezone.now():
             return Response({"detail": "Poll has expired."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -73,9 +58,6 @@ class PollViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["get"], permission_classes=[permissions.AllowAny])
     def results(self, request, pk=None):
-        """
-        Retrieve poll results with vote counts.
-        """
         poll = self.get_object()
         options = poll.options.annotate(votes_count=Count("votes"))
         serializer = OptionSerializer(options, many=True)
@@ -87,10 +69,6 @@ class PollViewSet(viewsets.ModelViewSet):
 
 
 class OptionCreateView(viewsets.ModelViewSet):
-    """
-    Optional: Separate endpoint to create/manage options
-    (if not using inline creation in PollViewSet).
-    """
     serializer_class = OptionSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -103,10 +81,6 @@ class OptionCreateView(viewsets.ModelViewSet):
 
 
 class VoteCreateView(viewsets.ModelViewSet):
-    """
-    Optional: Separate endpoint to cast votes
-    (if not using PollViewSet.vote()).
-    """
     serializer_class = VoteSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -135,7 +109,7 @@ class VoteCreateView(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(vote)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+
 class PollListCreateView(generics.ListCreateAPIView):
     queryset = Poll.objects.all()
     serializer_class = PollSerializer
