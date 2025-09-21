@@ -34,7 +34,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "poll-app.urls"
+ROOT_URLCONF = "poll_app.urls"
 
 TEMPLATES = [
     {
@@ -52,7 +52,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "poll-app.wsgi.application"
+WSGI_APPLICATION = "poll_app.wsgi.application"
 
 # Database (Render provides DATABASE_URL env var)
 DATABASES = {
