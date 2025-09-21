@@ -4,6 +4,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from django.views.generic import RedirectView
+from .views import home
 
 # Swagger / ReDoc schema view
 schema_view = get_schema_view(
@@ -20,6 +21,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path("", home),
     path("", RedirectView.as_view(url="/api/docs/", permanent=False)),
     path("admin/", admin.site.urls),
     path("api/auth/", include("users.urls")),
