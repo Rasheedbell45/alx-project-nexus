@@ -26,7 +26,7 @@ urlpatterns = [
     path("api/auth/", include("users.urls")),
 
     # Polling app (polls, options, votes, results)
-    path("api/polls/", include("app.urls")),
+    path("api/polls/", include("polls.urls")),
 
     # API docs
     path("api/docs/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
