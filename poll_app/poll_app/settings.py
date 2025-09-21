@@ -10,7 +10,6 @@ if not SECRET_KEY:
 
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 
-# Replace with your actual Render app URL
 ALLOWED_HOSTS = [os.environ.get("RENDER_EXTERNAL_HOSTNAME", "localhost")]
 
 INSTALLED_APPS = [
