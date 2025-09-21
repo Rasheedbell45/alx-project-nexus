@@ -21,8 +21,6 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("", home),
-    path("", RedirectView.as_view(url="/api/docs/", permanent=False)),
     path("admin/", admin.site.urls),
     path("api/auth/", include("users.urls")),
     path("api/polls/", include("polls.urls")),
@@ -30,4 +28,5 @@ urlpatterns = [
     path("api/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path("api/schema.json", schema_view.without_ui(cache_timeout=0), name="schema-json"),
     path("api/schema.yaml", schema_view.without_ui(cache_timeout=0), name="schema-yaml"),
+    path("", RedirectView.as_view(url="/api/docs/", permanent=False)),  # Only redirect root
 ]
