@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security
 SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-secret-key")
 DEBUG = os.environ.get("DEBUG", "0") == "1"
-ALLOWED_HOSTS = ["*"]  # Change to your Render URL or custom domain
+ALLOWED_HOSTS = ["*"]
 
 # Installed apps
 INSTALLED_APPS = [
@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     "users",
-    "app",   # your polls app
+    "polls",
 ]
 
 MIDDLEWARE = [
@@ -52,7 +52,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "poll_app.wsgi.application"
+WSGI_APPLICATION = "poll-app.wsgi.application"
 
 # Database (Render provides DATABASE_URL env var)
 DATABASES = {
