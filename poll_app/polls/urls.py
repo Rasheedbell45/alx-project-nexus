@@ -1,6 +1,6 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path
-from .views import PollViewSet, OptionCreateView, VoteCreateView, PollResultsView
+from .views import PollViewSet, OptionCreateView, VoteCreateView
 
 router = DefaultRouter()
 router.register(r'', PollViewSet, basename='poll')  # '' because included under api/polls/
@@ -14,7 +14,4 @@ urlpatterns = router.urls + [
 
     # Vote on a poll
     path('<int:poll_id>/vote/', VoteCreateView.as_view({'post': 'create'}), name='poll-vote'),
-
-    # Poll results
-    path('<int:poll_id>/results/', PollResultsView.as_view(), name='poll-results'),
 ]
