@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sendPasswordResetEmail } from "../api"; // You need to implement this API call
+import { sendPasswordResetEmail } from "../api";
 import { Link } from "react-router-dom";
 
 function ForgotPassword() {
@@ -28,18 +28,21 @@ function ForgotPassword() {
       >
         <h2 className="text-2xl font-bold mb-6 text-center">Forgot Password</h2>
 
-        {message && <p className="text-green-600 mb-4">{message}</p>}
-        {error && <p className="text-red-600 mb-4">{error}</p>}
+        {/* Centered messages */}
+        {message && <p className="text-green-600 mb-4 text-center">{message}</p>}
+        {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
 
+        {/* Email input */}
         <input
           type="email"
           placeholder="Enter your email"
-          className="w-full mb-4 px-4 py-2 border rounded-lg"
+          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
 
+        {/* Submit button */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
@@ -47,6 +50,7 @@ function ForgotPassword() {
           Send Reset Link
         </button>
 
+        {/* Navigation links */}
         <div className="mt-4 text-center text-sm">
           <p>
             Remember your password?{" "}
