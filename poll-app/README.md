@@ -23,5 +23,5 @@ POST /api/votes/ { poll_id, option_id }  # cast vote (auth required)
 ## Results
 GET /api/results/{poll_id}       # get real-time results (cached)
 
-## Swagger UI
+## Postman
 Open: /api/docs/
