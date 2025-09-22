@@ -9,23 +9,22 @@ function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-    try {
-      const res = await login(form);
-      localStorage.setItem("token", res.data.access);
-      setSuccess("Login successful! Redirecting...");
-      
-      // Redirect after a short delay so user sees success message
-      setTimeout(() => {
-        navigate("/polls");
-      }, 1000);
-    } catch (err) {
-      setError("Login failed. Please check your username and password.");
-    }
-  };
+  try {
+    const res = await login(form);
+    localStorage.setItem("token", res.data.access);
+
+    window.dispatchEvent(new Event("login"));
+
+    setSuccess("Login successful! Redirecting...");
+    setTimeout(() => navigate("/polls"), 1000);
+  } catch (err) {
+    setError("Login failed. Please check your username and password.");
+  }
+};
 
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
