@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
-import Register from "./pages/Register"; // added missing import
+import Register from "./pages/Register";
 import Polls from "./pages/Polls";
 import Results from "./pages/Results";
 import ForgotPassword from "./pages/ForgotPassword";
