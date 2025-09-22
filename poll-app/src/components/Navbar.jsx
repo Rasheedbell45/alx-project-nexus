@@ -7,24 +7,23 @@ function Navbar() {
   );
   const navigate = useNavigate();
 
-  // Listen for login/logout changes in localStorage
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setIsLoggedIn(!!localStorage.getItem("token"));
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
-
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setIsLoggedIn(false); // immediately update state
+    setIsLoggedIn(false);
     navigate("/login");
   };
+
+  useEffect(() => {
+    const handleLoginEvent = () => {
+      setIsLoggedIn(true);
+    };
+
+    window.addEventListener("login", handleLoginEvent);
+
+    return () => {
+      window.removeEventListener("login", handleLoginEvent);
+    };
+  }, []);
 
   return (
     <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
