@@ -5,14 +5,23 @@ import { useNavigate, Link } from "react-router-dom";
 function Login() {
   const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+
     try {
       const res = await login(form);
       localStorage.setItem("token", res.data.access);
-      navigate("/polls");
+      setSuccess("Login successful! Redirecting...");
+      
+      // Redirect after a short delay so user sees success message
+      setTimeout(() => {
+        navigate("/polls");
+      }, 1000);
     } catch (err) {
       setError("Login failed. Please check your username and password.");
     }
@@ -28,6 +37,9 @@ function Login() {
 
         {error && (
           <div className="text-red-500 mb-4 text-center">{error}</div>
+        )}
+        {success && (
+          <div className="text-green-500 mb-4 text-center">{success}</div>
         )}
 
         <input
