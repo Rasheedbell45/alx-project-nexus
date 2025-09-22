@@ -8,7 +8,8 @@ function Navbar() {
         <Link to="/" className="hover:underline">Home</Link>
         <Link to="/about" className="hover:underline">About</Link>
         <Link to="/contact" className="hover:underline">Contact</Link>
-        <Link to="/login" className="bg-white text-blue-600 px-3 py-1 rounded-lg hover:bg-gray-200">
+        <Link to="/login" className="hover:underline">Login</Link>
+        <Link to="/register" className="bg-white text-blue-600 px-3 py-1 rounded-lg hover:bg-gray-200">
           Get Started
         </Link>
       </div>
