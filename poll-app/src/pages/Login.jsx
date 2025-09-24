@@ -8,23 +8,32 @@ function Login() {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setSuccess("");
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
-  try {
-    const res = await login(form);
-    localStorage.setItem("token", res.data.access);
+    try {
+      const res = await login(form);
+      localStorage.setItem("token", res.data.access);
 
-    window.dispatchEvent(new Event("login"));
+      // Notify Navbar and other components
+      window.dispatchEvent(new Event("login"));
 
-    setSuccess("Login successful! Redirecting...");
-    setTimeout(() => navigate("/polls"), 1000);
-  } catch (err) {
-    setError("Login failed. Please check your username and password.");
-  }
-};
+      setSuccess("Login successful! Redirecting...");
+      setTimeout(() => navigate("/polls"), 1000);
+    } catch (err) {
+      setError(
+        err.response?.data?.detail ||
+          "Login failed. Please check your username and password."
+      );
+    }
+  };
 
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
@@ -34,26 +43,26 @@ function Login() {
       >
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
-        {error && (
-          <div className="text-red-500 mb-4 text-center">{error}</div>
-        )}
+        {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
         {success && (
           <div className="text-green-500 mb-4 text-center">{success}</div>
         )}
 
         <input
           type="text"
+          name="username"
           placeholder="Username"
           className="w-full mb-4 px-4 py-2 border rounded-lg"
           value={form.username}
-          onChange={(e) => setForm({ ...form, username: e.target.value })}
+          onChange={handleChange}
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
           className="w-full mb-2 px-4 py-2 border rounded-lg"
           value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          onChange={handleChange}
         />
 
         <div className="flex justify-between mb-4 text-sm">
