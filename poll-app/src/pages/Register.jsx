@@ -14,17 +14,25 @@ function Register() {
     setSuccess("");
 
     try {
-      await register(form);
+      await register(form); // Calls /users/register/ in api.js
       setSuccess("Registration successful! Redirecting to login...");
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      // Improved error handling
+      if (err.response?.data?.detail) {
+        setError(err.response.data.detail);
+      } else {
+        setError("Registration failed. Please try again.");
+      }
     }
   };
 
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
-      <form className="bg-white shadow-lg rounded-2xl p-8 w-96" onSubmit={handleSubmit}>
+      <form
+        className="bg-white shadow-lg rounded-2xl p-8 w-96"
+        onSubmit={handleSubmit}
+      >
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
 
         {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
