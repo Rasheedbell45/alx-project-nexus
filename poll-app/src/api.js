@@ -12,7 +12,7 @@ API.interceptors.request.use((req) => {
 
 export const login = (data) => API.post("/users/login/", data);
 export const register = (data) => API.post("/users/register/", data);
-export const forgotPassword = (data) => API.post("/users/forgot_password/", data);
+export const sendPasswordResetEmail = (data) => API.post("/users/forgot_password/", data);
 
 export const getPolls = () => API.get("/polls/");
 export const createPoll = (data) => API.post("/polls/", data);
