@@ -13,10 +13,14 @@ function ForgotPassword() {
     setError("");
 
     try {
-      await sendPasswordResetEmail({ email });
+      await sendPasswordResetEmail({ email }); // Calls /users/forgot_password/ in api.js
       setMessage("Password reset instructions have been sent to your email.");
     } catch (err) {
-      setError("Failed to send reset instructions. Please try again.");
+      if (err.response?.data?.detail) {
+        setError(err.response.data.detail);
+      } else {
+        setError("Failed to send reset instructions. Please try again.");
+      }
     }
   };
 
@@ -28,11 +32,9 @@ function ForgotPassword() {
       >
         <h2 className="text-2xl font-bold mb-6 text-center">Forgot Password</h2>
 
-        {/* Centered messages */}
         {message && <p className="text-green-600 mb-4 text-center">{message}</p>}
         {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
 
-        {/* Email input */}
         <input
           type="email"
           placeholder="Enter your email"
@@ -42,7 +44,6 @@ function ForgotPassword() {
           required
         />
 
-        {/* Submit button */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
@@ -50,7 +51,6 @@ function ForgotPassword() {
           Send Reset Link
         </button>
 
-        {/* Navigation links */}
         <div className="mt-4 text-center text-sm">
           <p>
             Remember your password?{" "}
