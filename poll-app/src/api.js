@@ -11,7 +11,11 @@ API.interceptors.request.use((req) => {
 });
 
 export const login = (data) => API.post("/users/login/", data);
+export const register = (data) => API.post("/users/forget_password/", data);
+export const register = (data) => API.post("/users/register/", data);
+
 export const getPolls = () => API.get("/polls/");
 export const createPoll = (data) => API.post("/polls/", data);
-export const votePoll = (pollId, optionId) => API.post(`/polls/${pollId}/vote/`, { option_id: optionId });
+export const votePoll = (pollId, optionId) =>
+  API.post(`/polls/${pollId}/vote/`, { option_id: optionId });
 export const getResults = (pollId) => API.get(`/polls/${pollId}/results/`);
