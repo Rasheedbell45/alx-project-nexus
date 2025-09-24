@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 
 // Pages
 import Home from "./pages/Home";
@@ -15,25 +16,44 @@ import ForgotPassword from "./pages/ForgotPassword";
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <div className="min-h-screen">
-        <Routes>
-          {/* Public pages */}
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            {/* Public pages */}
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
 
-          {/* Authentication pages */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+            {/* Authentication pages */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          {/* Protected pages */}
-          <Route path="/polls" element={<Polls />} />
-          <Route path="/results/:id" element={<Results />} />
-        </Routes>
+            {/* Protected pages */}
+            <Route
+              path="/polls"
+              element={
+                <PrivateRoute>
+                  <Polls />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/results/:id"
+              element={
+                <PrivateRoute>
+                  <Results />
+                </PrivateRoute>
+              }
+            />
+
+            {/* Fallback 404 */}
+            <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+          </Routes>
+        </main>
+        <Footer />
       </div>
-      <Footer />
     </BrowserRouter>
   );
 }
